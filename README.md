@@ -1,4 +1,6 @@
-# dockgrant [![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)]() [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) 
+# dockgrant 
+
+[![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)]() [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) 
 
 > Run vagrant commands like docker syntax
 

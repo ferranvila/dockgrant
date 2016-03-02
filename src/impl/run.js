@@ -4,19 +4,18 @@ var common = require('../../lib/common');
 
 var memFs = require('mem-fs');
 var editor = require('mem-fs-editor');
-var store = memFs.create();
-var fs = editor.create(store);
+var path = require('path');
 
 module.exports = {
 
     run: function (program, callback) {
 
-        // TODO: create a temporary directory for creating the VagrantFile
-        // Create the VagrantFile
-
-        if(program.debug) {
+        if (program.debug) {
             common.setLogLevel('debug');
         }
+
+        // Pre-requites validation
+        common.isCommandAvailable('vagrant -v');
 
         // Parse the shared volumes (-v host:guest)
         if (program.volume) {
@@ -34,9 +33,12 @@ module.exports = {
             common.log('debug', 'Working Directory: ' + program.workdir);
         }
 
-        fs.copyTpl('template/Vagrantfile', 'Vagrantfile', {key:'value'});
-        fs.commit(function(){
-            common.log('info','Created a Vagrantfile in your directory!');
+        // Create the Vagrantfile using the template
+        var store = memFs.create();
+        var fs = editor.create(store);
+        fs.copyTpl(path.join(__dirname, '../../template/Vagrantfile'), 'Vagrantfile', {key: 'value'});
+        fs.commit(function () {
+            common.log('info', 'Created a Vagrantfile in your directory!');
             callback();
         });
 
