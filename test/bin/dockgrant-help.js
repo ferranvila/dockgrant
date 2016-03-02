@@ -2,7 +2,7 @@
 
 var exec = require('child_process').exec;
 var assert = require('assert');
-var common = require('app/common');
+var common = require('../../lib/common');
 
 it('--help should run without errors', function (done) {
     exec(common.getBinPath() + '--help', function (error) {

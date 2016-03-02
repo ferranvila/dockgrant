@@ -1,6 +1,6 @@
 'use strict';
 
-var commonTests = require('app/common-tests');
+var commonTests = require('../lib/common-tests');
 var path = require('path');
 
 describe('dockgrant tests', function () {

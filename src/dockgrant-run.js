@@ -1,7 +1,7 @@
 'use strict';
 
 var program = require('commander');
-var common = require('app/common');
+var common = require('../lib/common');
 
 program
     .parse(process.argv);
