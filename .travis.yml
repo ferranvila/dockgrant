@@ -1,4 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-- "4.1"
+- '4.1'
+deploy:
+  provider: npm
+  email: ikocel1@gmail.com
+  api_key:
+    secure: XCFWw7GN2RsGCg9DXh0wl1IU4TqHdh0Rd51YZ/no3PoDjv3FTKyhXWSPm7qCNdNEJV6BF1xjCZkbiZjLuC8ILZD4ZHV5mbNQc3FtBbFEH/vnYmsHKNJ2/iSZ/HEYkOsm6sWbCTptmVzH6+rFnShkG6O/NRiRr0nlPCdUJ4LlZM2alMLdTCsQpuAmSxtWTMWBJIlfFRE7aNymk6pBKJDZ3wupdoXulI9SqxY84MRsHwUJbBCTWCiH5oI8D0PRxMWlqN3NS7ePWh/jiHPgKknL6TBTofsXpO/IvjrS0ruZfY/bLr25MxDzYyHrP+HAZb/nS0+K0zSdhIOXlmzgrpyiveRvcz2X4YN2n0/oR9cqOXaN8zLZraVqkvlbsChdFMTKHIexPF0O+69492VYeXR16tpEpox57HcUs95XV9624Fzs9kF6FJhAazaBCG/EUY5NTD9s5LLPumjQ3wU+USN0ZtKZtEU8tYWInCzAH+RUamhbzPNmqQtxwU4PRCtWdwmUhSv04cFFT70KL9mQWvxfIPYd1LAbO5pHmng8nel7zrGJ0HLAfzrzIw21fjT9cWHwank3ZQC1gTOKKSCt+wf4GzXAhKT847jlvd6G96WajVBSkUNZH2nv6KqxiyJ5Nu6uEufi2gD1v2KpxM7HUL9qh6CSQpvfAG0d2IvqS8bUEdE=
+  on:
+    tags: true
+    repo: ferranvila/dockgrant
+    branch: master
