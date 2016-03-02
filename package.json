@@ -1,0 +1,43 @@
+{
+  "name": "dockgrant",
+  "version": "0.0.1",
+  "description": "Dockgrant. Run vagrant commands like docker",
+  "preferGlobal": true,
+  "bin": {
+    "dockgrant": "./src/dockgrant.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferranvila/dockgrant.git"
+  },
+  "keywords": [
+    "dockgrant",
+    "docker",
+    "vagrant"
+  ],
+  "author": "Ferran Vila <ikocel1@gmail.com> (http://www.ferranvila.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-mocha-test": "^0.12.7",
+    "load-grunt-tasks": "^3.4.1",
+    "mocha": "^2.4.5",
+    "time-grunt": "^1.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/ferranvila/dockgrant/issues"
+  },
+  "homepage": "https://github.com/ferranvila/dockgrant#readme",
+  "main": "./src/dockgrant.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}
