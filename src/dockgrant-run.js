@@ -8,6 +8,7 @@ program
     .alias('dockgrant')
     .usage('run [options]')
     .description('Run a command inside a virtual image')
+    .option('-p, --path [path]', 'Working directory {unique}', null, null)
     .option('-i, --image [image]', 'Image name {unique} - [mandatory]', null, null)
     .option('-u, --imageurl [imageurl]', 'Image url for pulling from catalog {unique}', null, null)
     .option('-s, --script [script]', 'Command to execute inside the guest {unique} - [mandatory]', null, null)
@@ -32,6 +33,7 @@ if (program.debug) {
  */
 
 var vagrant = {
+    path:'.',
     quiet: false,
     delete_image: false,
     working_directory: '/vagrant',
@@ -67,6 +69,11 @@ if (program.rm) {
 // Quiet mode
 if (program.quiet) {
     vagrant.quiet = true;
+}
+
+// Working path
+if (program.path) {
+    vagrant.path = program.path;
 }
 
 // Image url
