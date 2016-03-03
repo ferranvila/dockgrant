@@ -1,6 +1,6 @@
 {
   "name": "dockgrant",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dockgrant. Run vagrant commands like docker",
   "preferGlobal": true,
   "main": "./src/dockgrant.js",
@@ -29,9 +29,11 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
+    "colors": "^1.1.2",
     "commander": "^2.9.0",
     "mem-fs": "^1.1.2",
-    "mem-fs-editor": "^2.2.0"
+    "mem-fs-editor": "^2.2.0",
+    "shelljs": "^0.6.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

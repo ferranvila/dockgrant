@@ -9,6 +9,9 @@ describe('dockgrant tests', function () {
         done();
     });
 
+    // TODO: create tests for run command
+
+    commonTests.importTest('version tests', path.join(__dirname, './bin/dockgrant-bin.js'));
     commonTests.importTest('version tests', path.join(__dirname, './bin/dockgrant-help.js'));
     commonTests.importTest('version tests', path.join(__dirname, './bin/dockgrant-version.js'));
 
