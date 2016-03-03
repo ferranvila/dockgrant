@@ -30,7 +30,7 @@ module.exports = {
         });
 
         // Bringing up the vagrant machine
-        var child = shell.exec('vagrant up', {async: true});
+        var child = shell.exec('vagrant up', {async: true, silent: vagrant.quiet});
         child.stdout.on('end', function () {
 
             common.log('debug', 'Vagrant up finished!');
@@ -41,7 +41,7 @@ module.exports = {
                 if (vagrant.delete_image) {
 
                     common.log('debug', 'Destroying the machine');
-                    child = shell.exec('vagrant destroy -f', {async: true});
+                    child = shell.exec('vagrant destroy -f', {async: true, silent: vagrant.quiet});
                 }
             });
         });

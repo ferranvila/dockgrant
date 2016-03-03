@@ -12,6 +12,7 @@ program
     .option('-s, --script [script]', 'Command to execute inside the guest {unique}', null, null)
     .option('-v, --volume [host:guest]', 'Share a host folder into the guest {multiple}', null, null)
     .option('-w, --workdir [workdir]', 'Working directory inside the virtual image {unique}', null, null)
+    .option('-q, --quiet', 'Quiet mode', null, null)
     .option('-r, --rm', 'Remove the image after execution', null, null)
     .option('-d, --debug', 'Enable verbose mode', null, null)
     .parse(process.argv);
@@ -30,6 +31,7 @@ if (program.debug) {
  */
 
 var vagrant = {
+    quiet: false,
     delete_image: false,
     working_directory: '/vagrant',
     image_name: '',
@@ -58,6 +60,11 @@ if (program.rm) {
     vagrant.delete_image = true;
 } else {
     common.log('warn', 'The image will not be destroyed after the execution');
+}
+
+// Quiet mode
+if (program.quiet) {
+    vagrant.quiet = true;
 }
 
 // Guest working directory
