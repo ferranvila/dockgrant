@@ -8,10 +8,14 @@ program
     .alias('dockgrant')
     .usage('run [options]')
     .description('Run a command inside a virtual image')
-    .option('-i, --image [image]', 'Image name {unique}', null, null)
-    .option('-s, --script [script]', 'Command to execute inside the guest {unique}', null, null)
+    .option('-p, --path [path]', 'Working directory {unique}', null, null)
+    .option('-i, --image [image]', 'Image name {unique} - [mandatory]', null, null)
+    .option('-u, --imageurl [imageurl]', 'Image url for pulling from catalog {unique}', null, null)
+    .option('-s, --script [script]', 'Command to execute inside the guest {unique} - [mandatory]', null, null)
     .option('-v, --volume [host:guest]', 'Share a host folder into the guest {multiple}', null, null)
+    .option('-e, --env [key=value]', 'Share a env var into the guest {multiple}', null, null)
     .option('-w, --workdir [workdir]', 'Working directory inside the virtual image {unique}', null, null)
+    .option('-q, --quiet', 'Quiet mode', null, null)
     .option('-r, --rm', 'Remove the image after execution', null, null)
     .option('-d, --debug', 'Enable verbose mode', null, null)
     .parse(process.argv);
@@ -30,11 +34,15 @@ if (program.debug) {
  */
 
 var vagrant = {
+    path:'.',
+    quiet: false,
     delete_image: false,
     working_directory: '/vagrant',
     image_name: '',
+    image_url: '',
     command: '',
-    volumes: []
+    volumes: [],
+    env_vars: []
 };
 
 // Image name
@@ -60,6 +68,21 @@ if (program.rm) {
     common.log('warn', 'The image will not be destroyed after the execution');
 }
 
+// Quiet mode
+if (program.quiet) {
+    vagrant.quiet = true;
+}
+
+// Working path
+if (program.path) {
+    vagrant.path = program.path;
+}
+
+// Image url
+if (program.imageurl) {
+    vagrant.image_url = program.imageurl;
+}
+
 // Guest working directory
 if (program.workdir) {
     vagrant.working_directory = program.workdir;
@@ -82,6 +105,21 @@ if (program.volume) {
     });
 }
 
+// Parse the env variables (-e key=value)
+if (program.volume) {
+    program.rawArgs.forEach(function (arg, i) {
+
+        if(arg === '-e' || arg === '--env') {
+            var values = program.rawArgs[i+1].split('=');
+            if(values.length !== 2) {
+                common.log('error', 'The env vars has no key=value format');
+                common.exit(1);
+            }
+            vagrant.env_vars.push(common.toObject(values));
+        }
+    });
+}
+
 common.log('debug', 'Program execution: ' + JSON.stringify(vagrant, null, 4));
 
 /*
@@ -92,4 +130,5 @@ common.log('debug', 'Program execution: ' + JSON.stringify(vagrant, null, 4));
 
 require('./impl/run').run(vagrant, function () {
 
+    common.exit(0);
 });
