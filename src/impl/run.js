@@ -5,13 +5,16 @@ var common = require('../../lib/common');
 var memFs = require('mem-fs');
 var editor = require('mem-fs-editor');
 var path = require('path');
+var shell = require('shelljs');
 
 module.exports = {
 
     run: function (vagrant, callback) {
 
         // Pre-requites validation
-        common.isCommandAvailable('vagrant -v');
+        common.isCommandAvailable('vagrant -v', 'vagrant');
+        common.isCommandAvailable('vagrant plugin list | grep vagrant-exec', 'vagrant-exec');
+        common.isCommandAvailable('vagrant plugin list | grep vagrant-cachier', 'vagrant-cachier');
 
         // Create the Vagrantfile using the template
         var store = memFs.create();
@@ -21,16 +24,27 @@ module.exports = {
             volumes: vagrant.volumes
         });
         fs.commit(function () {
-            common.log('info', 'Created a Vagrantfile in your directory!');
-            common.log('debug', '---------\n' + common.exec('cat Vagrantfile') + '---------');
+            common.log('debug', 'Created a Vagrantfile in your directory!');
+            common.log('debug', '---------\n' + shell.exec('cat Vagrantfile', {silent: true}).stdout + '---------');
             callback();
         });
 
-        // TODO: Vagrant up
-        // TODO: Change the working directory
-        // TODO: Execute the command
-        // TODO: Delete the image
+        // Bringing up the vagrant machine
+        var child = shell.exec('vagrant up', {async: true});
+        child.stdout.on('end', function () {
 
+            common.log('debug', 'Vagrant up finished!');
+
+            // Changing the working directory & Execute the command
+            child = shell.exec('vagrant exec \"cd ' + vagrant.working_directory + ' && ' + vagrant.command + '\"', {async: true});
+            child.stdout.on('end', function () {
+                if (vagrant.delete_image) {
+
+                    common.log('debug', 'Destroying the machine');
+                    child = shell.exec('vagrant destroy -f', {async: true});
+                }
+            });
+        });
 
     }
 };

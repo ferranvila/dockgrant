@@ -4,8 +4,6 @@
 var program = require('commander');
 var common = require('../lib/common');
 
-// TODO: dockgrant run -v /home/folder1:/folder1 -v /home/folder2:/folder2 -r -w /folder1 -d -i imageName -s "script to execute"
-
 program
     .alias('dockgrant')
     .usage('run [options]')
