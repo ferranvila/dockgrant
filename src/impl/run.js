@@ -27,7 +27,8 @@ module.exports = {
             image: vagrant.image_name,
             volumes: vagrant.volumes,
             image_url: vagrant.image_url,
-            working_dir: vagrant.working_directory
+            working_dir: vagrant.working_directory,
+            env_vars: vagrant.env_vars
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');
@@ -35,7 +36,7 @@ module.exports = {
 
             // Bringing up the vagrant machine
             var cmd = 'cd ' + vagrant.path + ' && vagrant up';
-            common.log('error', cmd);
+            common.log('debug', cmd);
             var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
             child.stdout.on('end', function () {
 
@@ -43,14 +44,14 @@ module.exports = {
 
                 // Changing the working directory & Execute the command
                 var cmd = 'cd ' + vagrant.path + ' && vagrant exec \"' + vagrant.command + '\"';
-                common.log('error', cmd);
+                common.log('debug', cmd);
                 child = shell.exec(cmd, {async: true});
                 child.stdout.on('end', function () {
                     if (vagrant.delete_image) {
 
                         common.log('debug', 'Destroying the machine');
                         var cmd = 'cd ' + vagrant.path + ' && vagrant destroy -f';
-                        common.log('error', cmd);
+                        common.log('debug', cmd);
                         child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
                         child.stdout.on('end', function () {
                             callback();

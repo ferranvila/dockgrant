@@ -13,6 +13,7 @@ program
     .option('-u, --imageurl [imageurl]', 'Image url for pulling from catalog {unique}', null, null)
     .option('-s, --script [script]', 'Command to execute inside the guest {unique} - [mandatory]', null, null)
     .option('-v, --volume [host:guest]', 'Share a host folder into the guest {multiple}', null, null)
+    .option('-e, --env [key=value]', 'Share a env var into the guest {multiple}', null, null)
     .option('-w, --workdir [workdir]', 'Working directory inside the virtual image {unique}', null, null)
     .option('-q, --quiet', 'Quiet mode', null, null)
     .option('-r, --rm', 'Remove the image after execution', null, null)
@@ -40,7 +41,8 @@ var vagrant = {
     image_name: '',
     image_url: '',
     command: '',
-    volumes: []
+    volumes: [],
+    env_vars: []
 };
 
 // Image name
@@ -99,6 +101,21 @@ if (program.volume) {
                 common.exit(1);
             }
             vagrant.volumes.push(common.toObject(values));
+        }
+    });
+}
+
+// Parse the env variables (-e key=value)
+if (program.volume) {
+    program.rawArgs.forEach(function (arg, i) {
+
+        if(arg === '-e' || arg === '--env') {
+            var values = program.rawArgs[i+1].split('=');
+            if(values.length !== 2) {
+                common.log('error', 'The env vars has no key=value format');
+                common.exit(1);
+            }
+            vagrant.env_vars.push(common.toObject(values));
         }
     });
 }
