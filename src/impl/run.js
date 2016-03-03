@@ -26,31 +26,39 @@ module.exports = {
         fs.copyTpl(path.join(__dirname, '../../template/Vagrantfile'), path.join(vagrant.path, 'Vagrantfile'), {
             image: vagrant.image_name,
             volumes: vagrant.volumes,
-            image_url: vagrant.image_url
+            image_url: vagrant.image_url,
+            working_dir: vagrant.working_directory
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');
             common.log('debug', '---------\n' + shell.exec('cd ' + vagrant.path + ' && cat Vagrantfile', {silent: true}).stdout + '---------');
-            callback();
-        });
 
-        // Bringing up the vagrant machine
-        var child = shell.exec('cd ' + vagrant.path + ' && vagrant up', {async: true, silent: vagrant.quiet});
-        child.stdout.on('end', function () {
-
-            common.log('debug', 'Vagrant up finished!');
-
-            // Changing the working directory & Execute the command
-            child = shell.exec('cd ' + vagrant.path + ' && vagrant exec \"cd ' + vagrant.working_directory + ' && ' + vagrant.command + '\"', {async: true});
+            // Bringing up the vagrant machine
+            var cmd = 'cd ' + vagrant.path + ' && vagrant up';
+            common.log('error', cmd);
+            var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
             child.stdout.on('end', function () {
-                if (vagrant.delete_image) {
 
-                    common.log('debug', 'Destroying the machine');
-                    child = shell.exec('cd ' + vagrant.path + ' && vagrant destroy -f', {
-                        async: true,
-                        silent: vagrant.quiet
-                    });
-                }
+                common.log('debug', 'Vagrant up finished!');
+
+                // Changing the working directory & Execute the command
+                var cmd = 'cd ' + vagrant.path + ' && vagrant exec \"' + vagrant.command + '\"';
+                common.log('error', cmd);
+                child = shell.exec(cmd, {async: true});
+                child.stdout.on('end', function () {
+                    if (vagrant.delete_image) {
+
+                        common.log('debug', 'Destroying the machine');
+                        var cmd = 'cd ' + vagrant.path + ' && vagrant destroy -f';
+                        common.log('error', cmd);
+                        child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
+                        child.stdout.on('end', function () {
+                            callback();
+                        });
+                    } else {
+                        callback();
+                    }
+                });
             });
         });
 
