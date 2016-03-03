@@ -8,7 +8,8 @@ var common = require('../lib/common');
 program
     .version(pck.version)
     .description(pck.description)
-    .command('run [options] <image> <sh>', 'Run a command inside a virtual image')
+    .usage('[command] [options]')
+    .command('run [options]', 'Run a command inside a virtual image')
     .parse(process.argv);
 
 // Unknown commands
