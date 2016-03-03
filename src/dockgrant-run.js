@@ -9,6 +9,7 @@ program
     .usage('run [options]')
     .description('Run a command inside a virtual image')
     .option('-i, --image [image]', 'Image name {unique} - [mandatory]', null, null)
+    .option('-u, --imageurl [imageurl]', 'Image url for pulling from catalog {unique}', null, null)
     .option('-s, --script [script]', 'Command to execute inside the guest {unique} - [mandatory]', null, null)
     .option('-v, --volume [host:guest]', 'Share a host folder into the guest {multiple}', null, null)
     .option('-w, --workdir [workdir]', 'Working directory inside the virtual image {unique}', null, null)
@@ -35,6 +36,7 @@ var vagrant = {
     delete_image: false,
     working_directory: '/vagrant',
     image_name: '',
+    image_url: '',
     command: '',
     volumes: []
 };
@@ -65,6 +67,11 @@ if (program.rm) {
 // Quiet mode
 if (program.quiet) {
     vagrant.quiet = true;
+}
+
+// Image url
+if (program.imageurl) {
+    vagrant.image_url = program.imageurl;
 }
 
 // Guest working directory

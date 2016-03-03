@@ -21,7 +21,8 @@ module.exports = {
         var fs = editor.create(store);
         fs.copyTpl(path.join(__dirname, '../../template/Vagrantfile'), 'Vagrantfile', {
             image: vagrant.image_name,
-            volumes: vagrant.volumes
+            volumes: vagrant.volumes,
+            image_url: vagrant.image_url
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile in your directory!');
