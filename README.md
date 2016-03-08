@@ -1,6 +1,6 @@
 # dockgrant 
 
-[![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)](https://travis-ci.org/ferranvila/dockgrant) [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) 
+[![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)](https://travis-ci.org/ferranvila/dockgrant) [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) [![Code Climate](https://img.shields.io/codeclimate/github/ferranvila/dockgrant.svg)](https://codeclimate.com/github/ferranvila/dockgrant) [![Inline docs](http://inch-ci.org/github/ferranvila/dockgrant.svg?branch=master)](http://inch-ci.org/github/ferranvila/dockgrant)  
 
 > Run vagrant commands like docker syntax
 
