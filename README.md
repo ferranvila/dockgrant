@@ -8,6 +8,10 @@ Just for fun! Or not... I created a command line tool to run [vagrant](https://w
 
 ## Pre-requisites
 
+- Vagrant https://www.vagrantup.com/
+- Vagrant exec plugin https://github.com/p0deje/vagrant-exec
+- Vagrant cachier plugin https://github.com/fgrehm/vagrant-cachier
+
 ## Getting Started
 
 Install this globally and you'll have access to the dockgrant command anywhere on your system.
