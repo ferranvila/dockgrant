@@ -36,18 +36,18 @@ if (program.debug) {
 var vagrant = {
     path:'.',
     quiet: false,
-    delete_image: false,
-    working_directory: '/vagrant',
-    image_name: '',
-    image_url: '',
+    deleteImage: false,
+    workingDirectory: '/vagrant',
+    imageName: '',
+    imageUrl: '',
     command: '',
     volumes: [],
-    env_vars: []
+    envVars: []
 };
 
 // Image name
 if (program.image) {
-    vagrant.image_name = program.image;
+    vagrant.imageName = program.image;
 } else {
     common.log('error', 'You have to define a image to use');
     common.exit(1);
@@ -63,7 +63,7 @@ if (program.script) {
 
 // Delete image
 if (program.rm) {
-    vagrant.delete_image = true;
+    vagrant.deleteImage = true;
 } else {
     common.log('warn', 'The image will not be destroyed after the execution');
 }
@@ -80,14 +80,14 @@ if (program.path) {
 
 // Image url
 if (program.imageurl) {
-    vagrant.image_url = program.imageurl;
+    vagrant.imageUrl = program.imageurl;
 }
 
 // Guest working directory
 if (program.workdir) {
-    vagrant.working_directory = program.workdir;
+    vagrant.workingDirectory = program.workdir;
 } else {
-    common.log('debug', 'The working dir will be the default: ' + vagrant.working_directory);
+    common.log('debug', 'The working dir will be the default: ' + vagrant.workingDirectory);
 }
 
 // Parse the shared volumes (-v host:guest)
@@ -115,7 +115,7 @@ if (program.volume) {
                 common.log('error', 'The env vars has no key=value format');
                 common.exit(1);
             }
-            vagrant.env_vars.push(common.toObject(values));
+            vagrant.envVars.push(common.toObject(values));
         }
     });
 }

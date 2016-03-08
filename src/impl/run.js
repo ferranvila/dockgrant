@@ -30,11 +30,11 @@ module.exports = {
         var store = memFs.create();
         var fs = editor.create(store);
         fs.copyTpl(path.join(__dirname, '../../template/Vagrantfile'), path.join(vagrant.path, 'Vagrantfile'), {
-            image: vagrant.image_name,
+            image: vagrant.imageName,
             volumes: vagrant.volumes,
-            image_url: vagrant.image_url,
-            working_dir: vagrant.working_directory,
-            env_vars: vagrant.env_vars
+            imageUrl: vagrant.imageUrl,
+            workingDir: vagrant.workingDirectory,
+            envVars: vagrant.envVars
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');
@@ -53,7 +53,7 @@ module.exports = {
                 common.log('debug', cmd);
                 child = shell.exec(cmd, {async: true});
                 child.stdout.on('end', function () {
-                    if (vagrant.delete_image) {
+                    if (vagrant.deleteImage) {
 
                         common.log('debug', 'Destroying the machine');
                         var cmd = 'cd ' + vagrant.path + ' && vagrant destroy -f';
