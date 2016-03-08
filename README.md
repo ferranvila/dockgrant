@@ -11,6 +11,7 @@ Just for fun! Or not... I created a command line tool to run [vagrant](https://w
 - Vagrant https://www.vagrantup.com/
 - Vagrant exec plugin https://github.com/p0deje/vagrant-exec
 - Vagrant cachier plugin https://github.com/fgrehm/vagrant-cachier
+- VirtualBox https://www.virtualbox.org/
 
 ## Getting Started
 
