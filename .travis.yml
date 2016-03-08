@@ -11,3 +11,6 @@ deploy:
     tags: true
     repo: ferranvila/dockgrant
     branch: master
+addons:
+    code_climate:
+        repo_token: ${CC_TOKEN}
