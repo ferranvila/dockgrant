@@ -1,9 +1,12 @@
 'use strict';
 
+var time = require('time-grunt');
+var load = require('load-grunt-tasks');
+
 module.exports = function (grunt) {
 
-    require('time-grunt')(grunt);
-    require('load-grunt-tasks')(grunt);
+    time(grunt);
+    load(grunt);
 
     grunt.initConfig({
 
