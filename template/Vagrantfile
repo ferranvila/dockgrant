@@ -2,8 +2,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "<%= image %>"
 
-  <% if(image_url != ''){ %>
-  config.vm.box_url = "<%= image_url %>"
+  <% if(imageUrl != ''){ %>
+  config.vm.box_url = "<%= imageUrl %>"
   <% } %>
 
   config.vm.provider "virtualbox" do |vb|
@@ -18,12 +18,12 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "private_network", type: "dhcp"
 
-  config.exec.commands '*', directory: '<%= working_dir %>'
+  config.exec.commands '*', directory: '<%= workingDir %>'
 
-  <% if(env_vars.length > 0) { %>
+  <% if(envVars.length > 0) { %>
   config.exec.commands '*', env: {
-    <% for(var i=0; i<env_vars.length; i++) {%>
-    '<%= env_vars[i][0] %>' => '<%= env_vars[i][1] %>' <% if(i < env_vars.length -1){ %>,<%}%>
+    <% for(var i=0; i<envVars.length; i++) {%>
+    '<%= envVars[i][0] %>' => '<%= envVars[i][1] %>' <% if(i < envVars.length -1){ %>,<%}%>
     <% } %>
   }
   <% } %>
