@@ -9,6 +9,12 @@ var shell = require('shelljs');
 
 module.exports = {
 
+    /**
+     * Method implementation for running the equivalent docker run on the
+     * vagrant syntax
+     * @param vagrant Vagrant object with all the information for the run
+     * @param callback Callback for execution at the end of the run
+     */
     run: function (vagrant, callback) {
 
         // Pre-requites validation
