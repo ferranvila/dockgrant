@@ -20,14 +20,15 @@ npm install -g dockgrant
 
 ```shell
 dockgrant run --rm --image hashicorp/precise64 --script "uname -a" -q
- >> Linux precise64 3.2.0-23-generic #36-Ubuntu SMP Tue Apr 10 20:39:51 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
 ```
+will output `Linux precise64 3.2.0-23-generic #36-Ubuntu SMP Tue Apr 10 20:39:51 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux`
 
 ```shell
-mkdir /tmp/example
-mkdir /tmp/example/data
-echo "echo hello \$VAR" > /tmp/example/data/script.sh
-dockgrant run --rm --path /tmp/example --volume /tmp/example/data:/data --workdir /data -e VAR=world --image hashicorp/precise64 --script "sh script.sh" -q
- >> hello world
+vf=/tmp/dockgrant-sample &&\
+mkdir -p ${vf}/data &&\
+echo "echo hello \$VAR" > ${vf}/data/script.sh &&\
+chmod +x ${vf}/data/script.sh  &&\
+dockgrant run --rm --path ${vf} --volume ${vf}/data:/data --workdir /data -e VAR=world --image hashicorp/precise64 --script "sh script.sh" -q
 ```
+will output `hello world`
 
