@@ -49,7 +49,7 @@ module.exports = {
                 common.log('debug', 'Vagrant up finished!');
 
                 // Changing the working directory & Execute the command
-                vagrant.command = vagrant.command.replace(/"/g,"\\\""); // Fix #18 Escape double quotes inside the vagrant command
+                vagrant.command = vagrant.command.replace(/"/g,'\\\"'); // Fix #18 Escape double quotes inside the vagrant command
                 var cmd = 'cd ' + vagrant.path + ' && vagrant exec \"' + vagrant.command + '\"';
                 common.log('debug', cmd);
                 child = shell.exec(cmd, {async: true});
