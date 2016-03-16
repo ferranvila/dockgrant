@@ -7,7 +7,7 @@ var common = require('../lib/common');
 program
     .alias('dockgrant')
     .usage('run [options]')
-    .description('Run a command inside a virtual image')
+    .description('Run a command inside a virtual image {vagrant up > vagrant exec}')
     .option('-p, --path [path]', 'Working directory {unique}', null, null)
     .option('-i, --image [image]', 'Image name {unique} - [mandatory]', null, null)
     .option('-u, --imageurl [imageurl]', 'Image url for pulling from catalog {unique}', null, null)
