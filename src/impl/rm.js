@@ -6,7 +6,7 @@ var shell = require('shelljs');
 module.exports = {
 
     /**
-     * Method implementation for running the equivalent docker stop on the
+     * Method implementation for running the equivalent docker rm on the
      * vagrant syntax
      * @param callback Callback for execution at the end of the run
      */
@@ -15,7 +15,13 @@ module.exports = {
         // Pre-requites validation
         common.isCommandAvailable('vagrant -v', 'vagrant');
 
-        var child = shell.exec('vagrant halt', {async: true, silent: vagrant.quiet});
+        var cmd;
+        if(vagrant.force) {
+            cmd = 'vagrant destroy --force'
+        } else {
+            cmd = 'vagrant destroy'
+        }
+        var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
         child.stdout.on('end', function () {
             callback();
         });
