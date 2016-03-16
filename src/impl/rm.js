@@ -17,9 +17,9 @@ module.exports = {
 
         var cmd;
         if(vagrant.force) {
-            cmd = 'vagrant destroy --force'
+            cmd = 'vagrant destroy --force';
         } else {
-            cmd = 'vagrant destroy'
+            cmd = 'vagrant destroy';
         }
         var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
         child.stdout.on('end', function () {
