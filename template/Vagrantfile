@@ -10,6 +10,7 @@ Vagrant.configure(2) do |config|
     vb.gui = false
     vb.memory = 2048
     vb.cpus = 2
+    vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
   <% for(var i=0; i<volumes.length; i++) {%>
