@@ -9,7 +9,8 @@ program
     .version(pck.version)
     .description(pck.description)
     .usage('[command] [options]')
-    .command('run [options]', 'Run a command inside a virtual image')
+    .command('run [options]', 'Run a command inside a virtual image {vagrant up > vagrant exec}')
+    .command('stop [options]', 'Stop a virtual image {vagrant halt}')
     .parse(process.argv);
 
 // Unknown commands
