@@ -1,10 +1,10 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 Vagrant.configure(2) do |config|
 
   config.vm.box = "<%= image %>"
-
-  <% if(imageUrl != ''){ %>
-  config.vm.box_url = "<%= imageUrl %>"
-  <% } %>
+  <% if(imageUrl != ''){ %>config.vm.box_url = "<%= imageUrl %>"<% } %>
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
@@ -13,22 +13,16 @@ Vagrant.configure(2) do |config|
     vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
-  <% for(var i=0; i<volumes.length; i++) {%>
-  config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "nfs"
-  <% } %>
-
   config.vm.network "private_network", type: "dhcp"
-
   config.exec.commands '*', directory: '<%= workingDir %>'
 
-  <% if(envVars.length > 0) { %>
-  config.exec.commands '*', env: {
-    <% for(var i=0; i<envVars.length; i++) {%>
-    '<%= envVars[i][0] %>' => '<%= envVars[i][1] %>' <% if(i < envVars.length -1){ %>,<%}%>
-    <% } %>
-  }
-  <% } %>
-  
+  config.vm.synced_folder ".", "/vagrant", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp,noatime']
+  <% for(var i=0; i<volumes.length; i++) {%>config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp,noatime']<% } %>
+
+  <% if(envVars.length > 0) { %>config.exec.commands '*', env: {
+    <% for(var i=0; i<envVars.length; i++) {%>'<%= envVars[i][0] %>' => '<%= envVars[i][1] %>' <% if(i < envVars.length -1){ %>,<%}%><% } %>
+  }<% } %>
+
   if Vagrant.has_plugin?("vagrant-vbguest")
     config.vbguest.auto_update = false
   end
