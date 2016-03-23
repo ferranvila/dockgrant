@@ -16,8 +16,8 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", type: "dhcp"
   config.exec.commands '*', directory: '<%= workingDir %>'
 
-  config.vm.synced_folder ".", "/vagrant", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp,noatime']
-  <% for(var i=0; i<volumes.length; i++) {%>config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp,noatime']<% } %>
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  <% for(var i=0; i<volumes.length; i++) { %>config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "rsync"<% } %>
 
   <% if(envVars.length > 0) { %>config.exec.commands '*', env: {
     <% for(var i=0; i<envVars.length; i++) {%>'<%= envVars[i][0] %>' => '<%= envVars[i][1] %>' <% if(i < envVars.length -1){ %>,<%}%><% } %>
@@ -29,9 +29,6 @@ Vagrant.configure(2) do |config|
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :machine
-    config.cache.synced_folder_opts = {
-      type: :nfs,
-      mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-    }
+    config.cache.synced_folder_opts = { type: :rsync }
   end
 end
