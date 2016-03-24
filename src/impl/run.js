@@ -34,7 +34,8 @@ module.exports = {
             volumes: vagrant.volumes,
             imageUrl: vagrant.imageUrl,
             workingDir: vagrant.workingDirectory,
-            envVars: vagrant.envVars
+            envVars: vagrant.envVars,
+            ip: common.getIp()
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');

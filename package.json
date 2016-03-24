@@ -1,6 +1,6 @@
 {
   "name": "dockgrant",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Dockgrant. Run vagrant commands like docker",
   "preferGlobal": true,
   "main": "./src/dockgrant.js",
@@ -31,6 +31,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "data-store": "^0.15.5",
     "mem-fs": "^1.1.2",
     "mem-fs-editor": "^2.2.0",
     "shelljs": "^0.6.0"
