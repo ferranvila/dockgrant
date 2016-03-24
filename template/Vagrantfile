@@ -13,11 +13,13 @@ Vagrant.configure(2) do |config|
     vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
-  config.vm.network "private_network", type: "dhcp"
+  config.vm.network "private_network", ip: "<%= ip %>"
   config.exec.commands '*', directory: '<%= workingDir %>'
 
-  config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  <% for(var i=0; i<volumes.length; i++) { %>config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "rsync"<% } %>
+  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  <% for(var i=0; i<volumes.length; i++) { %>
+  config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "nfs"
+  <% } %>
 
   <% if(envVars.length > 0) { %>config.exec.commands '*', env: {
     <% for(var i=0; i<envVars.length; i++) {%>'<%= envVars[i][0] %>' => '<%= envVars[i][1] %>' <% if(i < envVars.length -1){ %>,<%}%><% } %>
@@ -29,6 +31,6 @@ Vagrant.configure(2) do |config|
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :machine
-    config.cache.synced_folder_opts = { type: :rsync }
+    config.cache.synced_folder_opts = { type: :nfs }
   end
 end
