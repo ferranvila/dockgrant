@@ -1,4 +1,4 @@
-# dockgrant 
+# dockgrant
 
 [![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)](https://travis-ci.org/ferranvila/dockgrant) [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) [![Code Climate](https://img.shields.io/codeclimate/github/ferranvila/dockgrant.svg)](https://codeclimate.com/github/ferranvila/dockgrant) [![Codacy Badge](https://api.codacy.com/project/badge/grade/73f89de1c45e4eee8cea025cde851bb7)](https://www.codacy.com/app/fnva/dockgrant) [![Inline docs](http://inch-ci.org/github/ferranvila/dockgrant.svg?branch=master)](http://inch-ci.org/github/ferranvila/dockgrant)  
 
@@ -37,10 +37,29 @@ dockgrant run --rm --path ${vf} --volume ${vf}/data:/data --workdir /data -e VAR
 ```
 will output `hello world`
 
+### Network Collision
+
+If you're seeing this error when you're running the command is because the default vagrant network ```192.168.1.0``` is configured into your network card and collides with the vagrant private network:
+
+```script
+The specified host network collides with a non-hostonly network!
+This will cause your specified IP to be inaccessible. Please change
+the IP or name of your host only network so that it no longer matches that of
+a bridged or non-hostonly network.
+```
+
+You can define a new private network editing the config file of the program in: ```${HOME}/.dockgrant/app.js```
+
+```json
+{
+  "ip_lock": false,
+  "last_ip": "192.168.1.8",
+  "private_network": "192.168.2.0"
+}
+```
+
 ### ROOT PRIVILEGE REQUIREMENT
 
 https://www.vagrantup.com/docs/synced-folders/nfs.html
 
 To configure NFS, Vagrant must modify system files on the host. Therefore, at some point during the vagrant up sequence, you may be prompted for administrative privileges (via the typical sudo program). These privileges are used to modify ``/etc/exports`` as well as to start and stop the NFS server daemon.`
-
-
