@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
     vb.gui = false
     vb.memory = 2048
     vb.cpus = 1
-    vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+    vb.linked_clone = true
   end
 
   config.vm.network "private_network", ip: "<%= ip %>"
