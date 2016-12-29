@@ -128,7 +128,7 @@ common.log('debug', 'Program execution: ' + JSON.stringify(vagrant, null, 4));
  --------------------------------------------------------------------------------
  */
 
-require('./impl/run').run(vagrant, function () {
+require('./impl/run').run(vagrant, function (code) {
 
-    common.exit(0);
+    common.exit(code);
 });
