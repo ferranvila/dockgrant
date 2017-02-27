@@ -56,7 +56,11 @@ module.exports = {
                 if (code !== 0) {
                     // ERROR creating the machine
                     common.log('error', 'Creating the machine exit code: ' + code);
-                    callback(code);
+                    common.log('warn', 'Destroying the machine because the command is incorrect');
+                    shell.exec('vagrant destroy -f', {async: true, silent: vagrant.quiet}, function (destroyCode) {
+                        common.log('debug', `Destroy command finished with code ${destroyCode}`);
+                        callback(code);
+                    });
                 }
 
                 // Changing the working directory & Execute the command
@@ -72,7 +76,6 @@ module.exports = {
                             common.log('debug', `Destroy command finished with code ${destroyCode}`);
                             callback(code);
                         });
-                        callback(code);
                     }
 
                     if (vagrant.deleteImage) {

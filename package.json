@@ -1,6 +1,6 @@
 {
   "name": "dockgrant",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Dockgrant. Run vagrant commands like docker",
   "preferGlobal": true,
   "main": "./src/dockgrant.js",
