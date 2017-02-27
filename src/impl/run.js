@@ -51,9 +51,9 @@ module.exports = {
 
             // Bringing up the vagrant machine
             common.log('debug', 'Creating the machine');
-            var child = shell.exec('vagrant up', {async: true, silent: vagrant.quiet}, function(code){
+            shell.exec('vagrant up', {async: true, silent: vagrant.quiet}, function(code){
 
-                if (code != 0) {
+                if (code !== 0) {
                     // ERROR creating the machine
                     common.log('error', 'Creating the machine exit code: ' + code);
                     callback(code);
@@ -64,7 +64,7 @@ module.exports = {
                 common.log('debug', 'Executing the commands');
                 shell.exec('vagrant exec \"' + vagrant.command + '\"', {async: true}, function (code) {
 
-                    if (code != 0) {
+                    if (code !== 0) {
                         // ERROR creating the machine
                         common.log('error', 'Executing the commands exit code: ' + code);
                         common.log('warn', 'Destroying the machine because the command is incorrect');
