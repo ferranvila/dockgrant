@@ -23,7 +23,15 @@ module.exports = {
         common.isCommandAvailable('vagrant plugin list | grep vagrant-cachier', 'vagrant-cachier');
 
         if (vagrant.path !== '.') {
+
+            if (!vagrant.path.startsWith('/')){
+                common.log('error', 'The path varibale should be absolute');
+                callback(1);
+            }
+
             shell.exec('mkdir -p ' + vagrant.path);
+            // Change the running directory
+            process.chdir(vagrant.path);
         }
 
         // Create the Vagrantfile using the template
@@ -39,27 +47,38 @@ module.exports = {
         });
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');
-            common.log('debug', '---------\n' + shell.exec('cd ' + vagrant.path + ' && cat Vagrantfile', {silent: true}).stdout + '---------');
+            //common.log('debug', '---------\n' + shell.exec('cat Vagrantfile', {silent: true}).stdout + '---------');
 
             // Bringing up the vagrant machine
-            var cmd = 'cd ' + vagrant.path + ' && vagrant up';
-            common.log('debug', cmd);
-            var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
-            child.stdout.on('end', function () {
+            common.log('debug', 'Creating the machine');
+            shell.exec('vagrant up', {async: true, silent: vagrant.quiet}, function(code){
 
-                common.log('debug', 'Vagrant up finished!');
+                if (code !== 0) {
+                    // ERROR creating the machine
+                    common.log('error', 'Creating the machine exit code: ' + code);
+                    callback(code);
+                }
 
                 // Changing the working directory & Execute the command
                 vagrant.command = vagrant.command.replace(/"/g, '\\\"'); // Fix #18 Escape double quotes inside the vagrant command
-                var cmd = 'cd ' + vagrant.path + ' && vagrant exec \"' + vagrant.command + '\"';
-                common.log('debug', cmd);
-                shell.exec(cmd, {async: true}, function (code) {
+                common.log('debug', 'Executing the commands');
+                shell.exec('vagrant exec \"' + vagrant.command + '\"', {async: true}, function (code) {
+
+                    if (code !== 0) {
+                        // ERROR creating the machine
+                        common.log('error', 'Executing the commands exit code: ' + code);
+                        common.log('warn', 'Destroying the machine because the command is incorrect');
+                        shell.exec('vagrant destroy -f', {async: true, silent: vagrant.quiet}, function (destroyCode) {
+                            common.log('debug', `Destroy command finished with code ${destroyCode}`);
+                            callback(code);
+                        });
+                        callback(code);
+                    }
+
                     if (vagrant.deleteImage) {
 
                         common.log('debug', 'Destroying the machine');
-                        var cmd = 'cd ' + vagrant.path + ' && vagrant destroy -f';
-                        common.log('debug', cmd);
-                        shell.exec(cmd, {async: true, silent: vagrant.quiet}, function (destroyCode) {
+                        shell.exec('vagrant destroy -f', {async: true, silent: vagrant.quiet}, function (destroyCode) {
                             common.log('debug', `Destroy command finished with code ${destroyCode}`);
                             callback(code);
                         });
