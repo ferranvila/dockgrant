@@ -1,5 +1,7 @@
 # dockgrant
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ferranvila/dockgrant.svg)](https://greenkeeper.io/)
+
 [![Travis branch](https://img.shields.io/travis/ferranvila/dockgrant/master.svg)](https://travis-ci.org/ferranvila/dockgrant) [![Npm version](http://img.shields.io/npm/v/dockgrant.svg)](https://www.npmjs.com/package/dockgrant) [![Dependency Status](http://img.shields.io/david/ferranvila/dockgrant.svg)](https://david-dm.org/ferranvila/dockgrant) [![Code Climate](https://img.shields.io/codeclimate/github/ferranvila/dockgrant.svg)](https://codeclimate.com/github/ferranvila/dockgrant) [![Codacy Badge](https://api.codacy.com/project/badge/grade/73f89de1c45e4eee8cea025cde851bb7)](https://www.codacy.com/app/fnva/dockgrant) [![Inline docs](http://inch-ci.org/github/ferranvila/dockgrant.svg?branch=master)](http://inch-ci.org/github/ferranvila/dockgrant)  
 
 > Run vagrant commands like docker syntax
