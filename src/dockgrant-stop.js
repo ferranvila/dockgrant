@@ -1,4 +1,5 @@
 #! /usr/bin/env node --harmony
+
 'use strict';
 
 var program = require('commander');
@@ -11,8 +12,6 @@ program
     .option('-q, --quiet', 'Quiet mode', null, null)
     .option('-d, --debug', 'Enable verbose mode', null, null)
     .parse(process.argv);
-
-//common.log('info', program);
 
 if (program.debug) {
     common.log('debug', 'Enabling debug level');

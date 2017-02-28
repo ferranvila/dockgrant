@@ -1,4 +1,5 @@
 #! /usr/bin/env node --harmony
+
 'use strict';
 
 var program = require('commander');
@@ -34,7 +35,7 @@ if (program.debug) {
  */
 
 var vagrant = {
-    path:'.',
+    path: '.',
     quiet: false,
     deleteImage: false,
     workingDirectory: '/vagrant',
@@ -94,9 +95,9 @@ if (program.workdir) {
 if (program.volume) {
     program.rawArgs.forEach(function (arg, i) {
 
-        if(arg === '-v' || arg === '--volume') {
-            var values = program.rawArgs[i+1].split(':');
-            if(values.length !== 2) {
+        if (arg === '-v' || arg === '--volume') {
+            var values = program.rawArgs[i + 1].split(':');
+            if (values.length !== 2) {
                 common.log('error', 'The shared volumes has no host:guest format');
                 common.exit(1);
             }
@@ -109,9 +110,9 @@ if (program.volume) {
 if (program.volume) {
     program.rawArgs.forEach(function (arg, i) {
 
-        if(arg === '-e' || arg === '--env') {
-            var values = program.rawArgs[i+1].split('=');
-            if(values.length !== 2) {
+        if (arg === '-e' || arg === '--env') {
+            var values = program.rawArgs[i + 1].split('=');
+            if (values.length !== 2) {
                 common.log('error', 'The env vars has no key=value format');
                 common.exit(1);
             }
