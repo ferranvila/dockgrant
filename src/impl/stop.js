@@ -15,9 +15,15 @@ module.exports = {
         // Pre-requites validation
         common.isCommandAvailable('vagrant -v', 'vagrant');
 
-        var child = shell.exec('vagrant halt', {async: true, silent: vagrant.quiet});
-        child.stdout.on('end', function () {
-            callback();
+        shell.exec('vagrant halt', {
+            silent: vagrant.quiet
+        }, function (code) {
+            if (code === 0) {
+                common.log('debug', `The machine was stopped correctlly`);
+            } else {
+                common.log('error', `The machine stop command finished with an error: ${code}`);
+            }
+            callback(code);
         });
 
     }
