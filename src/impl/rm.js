@@ -15,15 +15,21 @@ module.exports = {
         // Pre-requites validation
         common.isCommandAvailable('vagrant -v', 'vagrant');
 
-        var cmd;
-        if(vagrant.force) {
-            cmd = 'vagrant destroy --force';
-        } else {
-            cmd = 'vagrant destroy';
+        if (vagrant.path !== '.') {
+            common.checkPath(vagrant.path);
+            // Change the running directory
+            process.chdir(vagrant.path);
         }
-        var child = shell.exec(cmd, {async: true, silent: vagrant.quiet});
-        child.stdout.on('end', function () {
-            callback();
+
+        shell.exec(vagrant.force ? 'vagrant destroy --force' : 'vagrant destroy', {
+            silent: vagrant.quiet
+        }, function (code) {
+            if (code === 0) {
+                common.log('debug', 'The machine was removed correctlly');
+            } else {
+                common.log('error', 'The machine remove command finished with an error: ${code}');
+            }
+            callback(code);
         });
 
     }
