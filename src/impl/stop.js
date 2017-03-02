@@ -15,13 +15,19 @@ module.exports = {
         // Pre-requites validation
         common.isCommandAvailable('vagrant -v', 'vagrant');
 
+        if (vagrant.path !== '.') {
+            common.checkPath(vagrant.path);
+            // Change the running directory
+            process.chdir(vagrant.path);
+        }
+
         shell.exec('vagrant halt', {
             silent: vagrant.quiet
         }, function (code) {
             if (code === 0) {
-                common.log('debug', `The machine was stopped correctlly`);
+                common.log('debug', 'The machine was stopped correctlly');
             } else {
-                common.log('error', `The machine stop command finished with an error: ${code}`);
+                common.log('error', 'The machine stop command finished with an error: ${code}');
             }
             callback(code);
         });
