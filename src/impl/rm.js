@@ -27,7 +27,7 @@ module.exports = {
             if (code === 0) {
                 common.log('debug', 'The machine was removed correctlly');
             } else {
-                common.log('error', 'The machine remove command finished with an error: ${code}');
+                common.log('error', 'The machine remove command finished with an error: ' + code);
             }
             callback(code);
         });
