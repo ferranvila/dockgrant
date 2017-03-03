@@ -123,6 +123,43 @@ common.log('debug', 'Program execution: ' + JSON.stringify(vagrant, null, 4));
 
 /*
  --------------------------------------------------------------------------------
+EXIT HANDLER
+ --------------------------------------------------------------------------------
+ */
+
+/**
+ * Exit handler for all the possible exits of the command
+ * @param {Object} options exit options object
+ * @param {Object} err error exit object
+ */
+function exitHandler(options, err) {
+
+    // SOMETHING HAPPEN...
+    if (err) {
+        common.log('error', err);
+    }
+    if (options.exit) {
+        common.log('error', 'SIGINT received: Exiting program');
+        // Machine cleanup
+        require('./impl/rm').run(vagrant, function (code) {
+            process.exit(code);
+        });
+
+    }
+}
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {
+    exit: true
+}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {
+    exit: true
+}));
+
+/*
+ --------------------------------------------------------------------------------
  Program execution
  --------------------------------------------------------------------------------
  */

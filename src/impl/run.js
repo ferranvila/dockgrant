@@ -36,8 +36,6 @@ module.exports = {
                     callback(code);
                 }
             });
-            // Change the running directory
-            process.chdir(vagrant.path);
         }
 
         // Create the Vagrantfile using the template
@@ -54,6 +52,9 @@ module.exports = {
         fs.commit(function () {
             common.log('debug', 'Created a Vagrantfile!');
             //common.log('debug', '---------\n' + shell.exec('cat Vagrantfile', {silent: true}).stdout + '---------');
+
+            // Change the running directory
+            process.chdir(vagrant.path);
 
             // Bringing up the vagrant machine
             common.log('debug', 'Creating the machine...');
