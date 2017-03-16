@@ -141,9 +141,9 @@ function exitHandler(options, err) {
     if (options.exit) {
         common.log('error', 'SIGINT received: Exiting program');
         // Machine cleanup
-        require('./impl/rm').run(vagrant, function (code) {
-            process.exit(code);
-        });
+        //require('./impl/rm').run(vagrant, function (code) {
+        //    process.exit(code);
+        //});
 
     }
 }
@@ -164,7 +164,24 @@ process.on('uncaughtException', exitHandler.bind(null, {
  --------------------------------------------------------------------------------
  */
 
+/* MARK: spagetti code */
 require('./impl/run').run(vagrant, function (code) {
-
-    common.exit(code);
+    if (code !== require('./impl/run').TIMEOUT) {
+        common.exit(code);
+    } else {
+        require('./impl/run').run(vagrant, function (code) {
+            if (code !== require('./impl/run').TIMEOUT) {
+                common.exit(code);
+            } else {
+                require('./impl/run').run(vagrant, function (code) {
+                    if (code !== require('./impl/run').TIMEOUT) {
+                        common.exit(code);
+                    } else {
+                        common.log('error', 'Program existed after 3 retries of creating the machine. Please try again');
+                        common.exit(code);
+                    }
+                });
+            }
+        });
+    }
 });

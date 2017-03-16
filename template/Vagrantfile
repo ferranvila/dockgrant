@@ -6,11 +6,18 @@ Vagrant.configure(2) do |config|
   config.vm.box = "<%= image %>"
   <% if(imageUrl != ''){ %>config.vm.box_url = "<%= imageUrl %>"<% } %>
 
+  config.vm.boot_timeout = 300
+  config.vm.box_check_update = false
+  config.vm.post_up_message = "Hello There!"
+
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
-    vb.memory = 2048
+    #vb.memory = 2048
     vb.cpus = 1
     vb.linked_clone = true
+    mem = `sysctl -n hw.memsize`.to_i / 1024
+    mem = mem / 1024 / 4
+    vb.customize ["modifyvm", :id, "--memory", mem]
   end
 
   config.vm.network "private_network", ip: "<%= ip %>"
@@ -19,10 +26,10 @@ Vagrant.configure(2) do |config|
     config.exec.commands '*', directory: '<%= workingDir %>'
   end
 
-  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
 
   <% for(var i=0; i<volumes.length; i++) { %>
-  config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "nfs"
+  config.vm.synced_folder "<%= volumes[i][0] %>", "<%= volumes[i][1] %>", type: "nfs", nfs_udp: false
   <% } %>
 
   <% if(envVars.length > 0) { %>config.exec.commands '*', env: {
