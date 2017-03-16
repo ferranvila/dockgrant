@@ -9,6 +9,8 @@ var shell = require('shelljs');
 
 module.exports = {
 
+    TIMEOUT: 100,
+
     /**
      * Method implementation for running the equivalent docker run on the
      * vagrant syntax
@@ -65,7 +67,12 @@ module.exports = {
 
                 if (code !== 0) {
                     // ERROR creating the machine
-                    common.log('error', 'ERROR(' + code + '): Creating the machine:' + stderr);
+                    common.log('error', 'ERROR-UP (' + code + '): Creating the machine:' + stderr);
+
+                    // SSH Provisioning Timeout Random ERROR https://github.com/mitchellh/vagrant/issues/8157
+                    if (stderr.indexOf('config.vm.boot_timeout') > -1) {
+                        code = self.TIMEOUT;
+                    }
                     self.destroy(vagrant, code, callback);
                 } else {
                     common.log('debug', 'Machine created!');
@@ -80,7 +87,7 @@ module.exports = {
 
                         if (code !== 0) {
                             // ERROR executing commands
-                            common.log('error', 'ERROR(' + code + '): Executing commands:' + stderr);
+                            common.log('error', 'ERROR-CMD (' + code + '): Executing commands:' + stderr);
                             self.destroy(vagrant, code, callback);
                         } else {
                             common.log('debug', 'Commands executed! ' + vagrant.command);

@@ -2,6 +2,11 @@
 
 Run vagrant commands like docker syntax
 
+## [1.0.8] - 2017-03-16
+
+### Added
+- Boot retry on timeout up (due to undefined error on Vagrant 1.9.1 and VBox 5.1.14)
+
 ## [1.0.7] - 2017-03-03
 
 ### Added
