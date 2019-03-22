@@ -37,7 +37,7 @@
     "shelljs": "0.7.7"
   },
   "devDependencies": {
-    "grunt": "1.0.1",
+    "grunt": "1.0.4",
     "grunt-cli": "1.2.0",
     "grunt-contrib-jshint": "1.1.0",
     "grunt-mocha-test": "0.13.2",
